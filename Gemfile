@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
-# Scource Script
-
-# use its ActiveResponse class for Shopify API.
-gem 'shopify_api'
+gem 'sinatra'
+gem 'httparty'
+gem 'shopify_api', '~> 4.0.7'
 
 # .env file hold app configuration and gets loaded (no need to embecd  
 gem 'dotenv'  
@@ -14,4 +13,3 @@ gem 'pry'
 
 # Testing
 gem 'minitest'
-
