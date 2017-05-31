@@ -6,11 +6,11 @@ require 'httparty'
 require 'dotenv'
 Dotenv.load
 
-class GiftBasket < Sinatra::Base
+class SecondChance < Sinatra::Base
   attr_reader :tokens
   API_KEY = ENV['API_KEY']
   API_SECRET = ENV['API_SECRET']
-  APP_URL = "955cf4d6.ngrok.io"
+  APP_URL = "ca3da5ac.ngrok.io"
 
   def initialize
     @tokens = {}
@@ -20,7 +20,7 @@ class GiftBasket < Sinatra::Base
 #Sinatra block. When reaching that URL, do these...
 
 # Installation Block.
-  get '/giftbasket/install' do
+  get '/secondchance/install' do
     shop = request.params['shop']
     
     # Specify the permission scope.
@@ -29,14 +29,14 @@ class GiftBasket < Sinatra::Base
     # construct the installation URL and redirect the merchant
     # Must conttain
     install_url = "http://#{shop}/admin/oauth/authorize?client_id=#{API_KEY}"\
-                "&scope=#{scopes}&redirect_uri=https://#{APP_URL}/giftbasket/auth"
+                "&scope=#{scopes}&redirect_uri=https://#{APP_URL}/secondchance/auth"
 
     # redirect to the install_url
     redirect install_url
   end
 
 # OAuthonication via TOKEN
-  get '/giftbasket/auth' do
+  get '/secondchance/auth' do
     # extract shop data from request parameters
     shop = request.params['shop']
     code = request.params['code']
@@ -57,7 +57,7 @@ class GiftBasket < Sinatra::Base
   end
 
 # when POST to order creation process.
-    post '/giftbasket/webhook/order_create' do
+    post '/SecondChance/webhook/order_create' do
     # inspect hmac value in header and verify webhook
     hmac = request.env['HTTP_X_SHOPIFY_HMAC_SHA256']
 
@@ -166,7 +166,7 @@ class GiftBasket < Sinatra::Base
       unless ShopifyAPI::Webhook.find(:all).any?
         webhook = {
           topic: 'orders/create',
-          address: "https://#{APP_URL}/giftbasket/webhook/order_create",
+          address: "https://#{APP_URL}/SecondChance/webhook/order_create",
           format: 'json'}
 
         ShopifyAPI::Webhook.create(webhook)
@@ -175,4 +175,4 @@ class GiftBasket < Sinatra::Base
   end
 end
 
-run GiftBasket.run!
+run SecondChance.run!
