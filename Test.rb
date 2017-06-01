@@ -1,5 +1,6 @@
 
 # Loading libraries. 
+require 'shopify_api'
 require 'sinatra'
 require 'httparty'
 require 'dotenv'
