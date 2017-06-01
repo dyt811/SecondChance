@@ -2,7 +2,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     coderay (1.1.1)
+    daemons (1.2.4)
     dotenv (2.2.1)
+    eventmachine (1.2.3)
     httparty (0.15.5)
       multi_xml (>= 0.5.2)
     method_source (0.8.2)
@@ -12,13 +14,16 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    puma (3.8.2)
     rack (1.6.8)
     rake (12.0.0)
     sinatra (1.1.0)
       rack (~> 1.1)
       tilt (~> 1.1)
     slop (3.6.0)
+    thin (1.7.0)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0, >= 1.0.4)
+      rack (>= 1, < 3)
     tilt (1.4.1)
 
 PLATFORMS
@@ -29,9 +34,9 @@ DEPENDENCIES
   httparty
   minitest
   pry
-  puma
   rake
   sinatra (= 1.1.0)
+  thin
 
 RUBY VERSION
    ruby 2.4.0p0

@@ -6,7 +6,7 @@ gem 'httparty'
 # .env file hold app configuration and gets loaded (no need to embecd  
 gem 'dotenv'  
 gem 'rake'
-gem 'puma'
+gem 'thin'
 
 # Debugging
 gem 'pry'
