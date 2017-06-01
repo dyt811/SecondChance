@@ -1,1 +1,1 @@
-worker: bundle exec ruby Test.rb -p $PORT
+worker: rackup -s puma -p $PORT
