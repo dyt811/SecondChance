@@ -1,8 +1,7 @@
-source 'https://rubygems.org'
-
-gem 'sinatra'
+source "https://rubygems.org"
+ruby "2.4.0"
+gem 'sinatra', '1.1.0'
 gem 'httparty'
-gem 'shopify_api', '~> 4.0.7'
 
 # .env file hold app configuration and gets loaded (no need to embecd  
 gem 'dotenv'  
