@@ -7,7 +7,6 @@ gem 'httparty'
 gem 'dotenv'  
 gem 'rake'
 gem 'puma'
-gem 'foreman'
 
 # Debugging
 gem 'pry'
