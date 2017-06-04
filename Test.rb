@@ -11,6 +11,7 @@ class SecondChance < Sinatra::Base
   API_KEY = ENV['API_KEY']
   API_SECRET = ENV['API_SECRET']
   APP_URL = "second-chance.herokuapp.com"
+  nonce = rand(36**length).to_s(36)
 
   def initialize
     @tokens = {}
@@ -19,17 +20,20 @@ class SecondChance < Sinatra::Base
 
   #Sinatra block. When reaching that URL, do these...
 
-  # Installation Block.
+  # Key Installation Block to install the proper permission for the app. 
   get '/secondchance/install' do
     shop = request.params['shop']
 
       # Specify the permission scope.
-      scopes = "read_orders,read_products,write_products"
+      # Need to be able to R orders, 
+      # Need to be able to RW Customers.  
+      # Need to be able to W draft orders
+      scopes = "read_orders,read_products,write_products,read_customers,write_customers, read_draft_orders, write_draft_orders"
 
-      # construct the installation URL and redirect the merchant
-      # Must conttain
+      # construct the installation/permission request URL and redirect the merchant
+      # Key component: Shop URL, API_Key, Scopes, APP_URL
       install_url = "http://#{shop}/admin/oauth/authorize?client_id=#{API_KEY}"\
-      "&scope=#{scopes}&redirect_uri=https://#{APP_URL}/secondchance/auth"
+      "&scope=#{scopes}&redirect_uri=https://#{APP_URL}/secondchance/auth&state=#{nonce}"
 
       # redirect to the install_url
       redirect install_url
@@ -41,9 +45,14 @@ class SecondChance < Sinatra::Base
       shop = request.params['shop']
       code = request.params['code']
       hmac = request.params['hmac']
+      nonceReply = request.params['state']
+
+      # Perform nonce validation to ensure that it is coming from Shopify
+      validate_nonce(nonceReply)
 
       # perform hmac validation to determine if the request is coming from Shopify
       validate_hmac(hmac,request)
+      
 
       # if no access token for this particular shop exist,
       # POST the OAuth request and receive the token in the response
@@ -122,6 +131,7 @@ class SecondChance < Sinatra::Base
             code: code}
 
             response = HTTParty.post(url, body: payload)
+
           # if the response is successful, obtain the token and store it in a hash
           if response.code == 200
             @tokens[shop] = response['access_token']
@@ -129,7 +139,10 @@ class SecondChance < Sinatra::Base
             return [500, "Something went wrong."]
           end
 
-          instantiate_session(shop)
+          # Redirect to 
+          redirect "https://second-chance.herokuapp.com/"
+
+          # instantiate_session(shop)
         end
       end
 
@@ -148,6 +161,13 @@ class SecondChance < Sinatra::Base
           return [403, "Authentication failed. Digest provided was: #{digest}"]
         end
       end
+
+      def validate_nonce(reply)
+        unless (reply == nonce)
+          return [403, "Authentication failed. Replied nonce provided was: #{reply}"]
+        end
+      end
+
 
       def verify_webhook(hmac, data)
         digest = OpenSSL::Digest.new('sha256')
