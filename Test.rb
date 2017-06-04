@@ -59,10 +59,13 @@ class SecondChance < Sinatra::Base
       get_shop_access_token(shop,API_KEY,API_SECRET,code)
 
       # create webhook for order creation if it doesn't exist
-      create_order_webhook
+      #create_order_webhook
       
       # now that the session is activated, redirect to the bulk edit page
-      redirect bulk_edit_url
+      #redirect bulk_edit_url
+
+      # Redirect to   
+      redirect "https://second-chance.herokuapp.com/"
   end
 
   # when POST to order creation process.
