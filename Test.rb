@@ -11,7 +11,7 @@ class SecondChance < Sinatra::Base
   API_KEY = ENV['API_KEY']
   API_SECRET = ENV['API_SECRET']
   APP_URL = "second-chance.herokuapp.com"
-  nonce = rand(36**length).to_s(36)
+  nonce = rand(36**32).to_s(36)
 
   def initialize
     @tokens = {}
