@@ -10,7 +10,7 @@ class SecondChance < Sinatra::Base
   attr_reader :tokens
   API_KEY = ENV['API_KEY']
   API_SECRET = ENV['API_SECRET']
-  APP_URL = "ca3da5ac.ngrok.io"
+  APP_URL = "second-chance.herokuapp.com"
 
   def initialize
     @tokens = {}
