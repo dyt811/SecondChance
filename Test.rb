@@ -37,10 +37,14 @@ class SecondChance < Sinatra::Base
 
       # redirect to the install_url
       redirect install_url
-  end
+      mylog("End of Install")
+    end
 
   # OAuthonication via TOKEN
-  get '/secondchance/auth' do
+  get '/secondchance/auth*' do
+      
+      mylog("Reached the beginner of autho")
+
       # extract shop data from request parameters
       shop = request.params['shop']
       code = request.params['code']
@@ -49,10 +53,11 @@ class SecondChance < Sinatra::Base
 
       # Perform nonce validation to ensure that it is coming from Shopify
       validate_nonce(nonceReply)
+      mylog("Validated Nonce")
 
       # perform hmac validation to determine if the request is coming from Shopify
       validate_hmac(hmac,request)
-      
+      mylog("Validated HMAC")
 
       # if no access token for this particular shop exist,
       # POST the OAuth request and receive the token in the response
@@ -66,7 +71,7 @@ class SecondChance < Sinatra::Base
 
       # Redirect to   
       redirect "https://second-chance.herokuapp.com/"
-  end
+    end
 
   # when POST to order creation process.
   post '/SecondChance/webhook/order_create' do
@@ -198,7 +203,11 @@ class SecondChance < Sinatra::Base
           end
         end
       end
-  
+
+      def mylog(str)
+        puts "#{__FILE__}:#{__LINE__}:#{str}"  
+      end
+
 
   #============================
   # Test Code BLOCK============
