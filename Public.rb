@@ -74,14 +74,6 @@ class SecondChance < Sinatra::Base
     # create webhook for order creation if it doesn't exist
     create_order_webhook
 
-    orders = get_orders
-    show_orders(orders)
-    "Orders Count: #{orders.count}\n"
-
-    customers = get_customers
-    show_customers(customers)
-    "Customers Count: #{customers.count}\n"
-
     # now that the session is activated, redirect to the bulk edit page
     redirect "https://second-chance.herokuapp.com/orders"
   end
@@ -168,6 +160,8 @@ class SecondChance < Sinatra::Base
 
   #Retrieve a list of orders and display them.
   get '/orders' do
+    instantiate_session(shop)
+
     # Get orders
     orders = get_orders
 
@@ -176,10 +170,11 @@ class SecondChance < Sinatra::Base
     # Display all orders
     show_orders(orders)
 
-
   end
 
   get '/customers' do
+    instantiate_session(shop)
+
     customers = get_customers
     show_customers(customers)
     "Customer Count: #{customers.count}\n"
