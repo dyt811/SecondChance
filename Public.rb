@@ -83,7 +83,7 @@ class SecondChance < Sinatra::Base
     "Customers Count: #{customers.count}\n"
 
     # now that the session is activated, redirect to the bulk edit page
-    redirect "https://#{APP_URL}/orders"
+    redirect "https://second-chance.herokuapp.com/orders"
   end
 
   # when POST to order creation process.
