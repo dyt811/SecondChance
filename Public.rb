@@ -16,6 +16,7 @@ class SecondChance < Sinatra::Base
 
   def initialize
     @tokens = {}
+    @shop = {}
     super
   end
 
@@ -23,7 +24,7 @@ class SecondChance < Sinatra::Base
 
   # Key Installation Block to install the proper permission for the app.
   get '/install' do
-    shop = request.params['shop']
+    @shop = request.params['shop']
 
     # Specify the permission scope.
     # Need to be able to R orders,
@@ -47,7 +48,7 @@ class SecondChance < Sinatra::Base
     log("Reached the beginning of authorization", __LINE__)
 
     # extract shop data from request parameters
-    shop = request.params['shop']
+    @shop = request.params['shop']
     log("Shop: #{shop}", __LINE__)
 
     code = request.params['code']
@@ -160,7 +161,7 @@ class SecondChance < Sinatra::Base
 
   #Retrieve a list of orders and display them.
   get '/orders' do
-    instantiate_session(shop)
+    instantiate_session(@shop)
 
     # Get orders
     orders = get_orders
@@ -173,7 +174,7 @@ class SecondChance < Sinatra::Base
   end
 
   get '/customers' do
-    instantiate_session(shop)
+    instantiate_session(@shop)
 
     customers = get_customers
     show_customers(customers)
