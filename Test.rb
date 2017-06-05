@@ -44,7 +44,7 @@ class SecondChance < Sinatra::Base
   # OAuthonication via TOKEN
   get '/secondchance/auth*' do
 
-    mylog("Reached the beginner of autho")
+    mylog("Reached the beginner of authorization")
 
     # extract shop data from request parameters
     shop = request.params['shop']
