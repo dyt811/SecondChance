@@ -164,7 +164,7 @@ class SecondChance < Sinatra::Base
   #Retrieve a list of orders and display them.
   get '/orders' do
     # Get orders
-    orders = get_orders
+    orders = ShopifyAPI::Order.all
     # Display all orders
     show_orders(orders)
 
@@ -172,7 +172,7 @@ class SecondChance < Sinatra::Base
   end
 
   get '/customers' do
-    customers = get_customers
+    customers = ShopifyAPI::Customer.all
     show_customers(customers)
   end
 
