@@ -44,13 +44,20 @@ class SecondChance < Sinatra::Base
   # OAuthonication via TOKEN
   get '/secondchance/auth*' do
 
-    mylog("Reached the beginner of authorization")
+    mylog("Reached the beginning of authorization")
 
     # extract shop data from request parameters
     shop = request.params['shop']
+    mylog("#{shop}")
+
     code = request.params['code']
+    mylog("#{code}")
+
     hmac = request.params['hmac']
+    mylog("#{hmac}")
+
     nonceReply = request.params['state']
+    mylog("#{nonceReply}")
 
     # Perform nonce validation to ensure that it is coming from Shopify
     validate_nonce(nonceReply)
@@ -243,7 +250,8 @@ class SecondChance < Sinatra::Base
     end
 
     def mylog(str)
-      puts "#{__FILE__}:#{__LINE__}:#{str}"
+      puts "Reached=>#{__LINE__}:#{str}"
+      #puts "#{__FILE__}:#{__LINE__}:#{str}"
     end
   end
 
