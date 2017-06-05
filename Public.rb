@@ -70,7 +70,7 @@ class SecondChance < Sinatra::Base
 
     # if no access token for this particular shop exist,
     # POST the OAuth request and receive the token in the response
-    get_shop_access_token(shop,API_KEY,API_SECRET,code)
+    get_shop_access_token(@shop,API_KEY,API_SECRET,code)
 
     # create webhook for order creation if it doesn't exist
     create_order_webhook
@@ -204,7 +204,7 @@ class SecondChance < Sinatra::Base
   helpers do
     def get_shop_access_token(shop,client_id,client_secret,code)
       if @tokens[shop].nil?
-        url = "https://#{@shop}/admin/oauth/access_token"
+        url = "https://#{shop}/admin/oauth/access_token"
 
         payload = {client_id: client_id,client_secret: client_secret,code: code}
 
