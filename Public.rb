@@ -161,8 +161,6 @@ class SecondChance < Sinatra::Base
 
   #Retrieve a list of orders and display them.
   get '/orders' do
-    instantiate_session(@shop)
-
     # Get orders
     orders = ShopifyAPI::Order.all
 
