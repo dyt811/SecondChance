@@ -249,8 +249,8 @@ class SecondChance < Sinatra::Base
       end
     end
 
-    def mylog(str,Line)
-      puts "Reached=>#{Line}:#{str}"
+    def mylog(str,line)
+      puts "Reached=>#{line}:#{str}"
       #puts "#{__FILE__}:#{__LINE__}:#{str}"
     end
   end
