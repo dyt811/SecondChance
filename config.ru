@@ -1,3 +1,3 @@
 $stdout.sync = true
-require './Test'
+require './Public'
 run Sinatra::Application
