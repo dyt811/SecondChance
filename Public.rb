@@ -34,7 +34,7 @@ class SecondChance < Sinatra::Base
 
     # construct the installation/permission request URL and redirect the merchant
     # Key component: Shop URL, API_Key, Scopes, APP_URL
-    install_url = "http://#{shop}/admin/oauth/authorize?client_id=#{API_KEY}"\
+    install_url = "http://#{@shop}/admin/oauth/authorize?client_id=#{API_KEY}"\
     "&scope=#{scopes}&redirect_uri=https://#{APP_URL}/auth&state=#{NONCE}"
 
     # redirect to the install_url
@@ -49,7 +49,7 @@ class SecondChance < Sinatra::Base
 
     # extract shop data from request parameters
     @shop = request.params['shop']
-    log("Shop: #{shop}", __LINE__)
+    log("Shop: #{@shop}", __LINE__)
 
     code = request.params['code']
     log("Code: #{code}", __LINE__)
@@ -204,7 +204,7 @@ class SecondChance < Sinatra::Base
   helpers do
     def get_shop_access_token(shop,client_id,client_secret,code)
       if @tokens[shop].nil?
-        url = "https://#{shop}/admin/oauth/access_token"
+        url = "https://#{@shop}/admin/oauth/access_token"
 
         payload = {client_id: client_id,client_secret: client_secret,code: code}
 
