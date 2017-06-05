@@ -22,7 +22,7 @@ class SecondChance < Sinatra::Base
   #Sinatra block. When reaching that URL, do these...
 
   # Key Installation Block to install the proper permission for the app.
-  get '/secondchance/install' do
+  get '/install' do
     shop = request.params['shop']
 
     # Specify the permission scope.
@@ -42,7 +42,7 @@ class SecondChance < Sinatra::Base
   end
 
   # OAuthonication via TOKEN
-  get '/secondchance/auth*' do
+  get '/auth' do
 
     log("Reached the beginning of authorization", __LINE__)
 
@@ -83,7 +83,7 @@ class SecondChance < Sinatra::Base
     "Customers Count: #{customers.count}\n"
 
     # now that the session is activated, redirect to the bulk edit page
-    # redirect bulk_edit_url
+    redirect "https://#{APP_URL}/orders"
   end
 
   # when POST to order creation process.
@@ -169,16 +169,20 @@ class SecondChance < Sinatra::Base
   #Retrieve a list of orders and display them.
   get '/orders' do
     # Get orders
-    orders = ShopifyAPI::Order.all
+    orders = get_orders
+
+    "Orders Count: #{orders.count}\n"
+
     # Display all orders
     show_orders(orders)
 
-    "Orders Count: #{orders.count}\n"
+
   end
 
   get '/customers' do
-    customers = ShopifyAPI::Customer.all
+    customers = get_customers
     show_customers(customers)
+    "Customer Count: #{customers.count}\n"
   end
 
   post '/form' do
