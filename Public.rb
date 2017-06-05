@@ -217,9 +217,6 @@ class SecondChance < Sinatra::Base
           return [500, "Something went wrong."]
         end
 
-        # Redirect to
-        redirect "https://second-chance.herokuapp.com/"
-
         instantiate_session(shop)
       end
     end
