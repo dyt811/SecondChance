@@ -213,7 +213,13 @@ class SecondChance < Sinatra::Base
     def validate_hmac(hmac,request)
       h = request.params.reject{|k,_| k == 'hmac' || k == 'signature'}
       query = URI.escape(h.sort.collect{|k,v| "#{k}=#{v}"}.join('&'))
-      digest = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), API_SECRET, query)
+      sha = OpenSSL::Digest.new('sha256')
+
+      mylog("API_SECRET#{API_SECRET}",__LINE__)
+      mylog("query:#{query}",__LINE__)
+      mylog("SHA:#{sha}",__LINE__)
+
+      digest = OpenSSL::HMAC.hexdigest(sha, API_SECRET, query)
 
       unless (hmac == digest)
         return [403, "Authentication failed. Digest provided was: #{digest}"]
@@ -257,4 +263,4 @@ class SecondChance < Sinatra::Base
 
 end
 
-run SecondChance.run!
+#run SecondChance.run!
