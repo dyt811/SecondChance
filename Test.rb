@@ -263,4 +263,4 @@ class SecondChance < Sinatra::Base
 
 end
 
-#run SecondChance.run!
+run SecondChance.run!
