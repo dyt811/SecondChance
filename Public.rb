@@ -308,8 +308,8 @@ class SecondChance < Sinatra::Base
       customerList = []
       customers.each do |customer|
 
-        puts "Customer: #{customer.number} = #{customer.id}"
-        "Customer: #{customer.number} = #{customer.id}"
+        puts "Customer: #{customer.email} = #{customer.id}"
+        "Customer: #{customer.email} = #{customer.id}"
         customerList << customer
       end
     end
