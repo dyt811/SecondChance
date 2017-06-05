@@ -164,11 +164,16 @@ class SecondChance < Sinatra::Base
   #Retrieve a list of orders and display them.
   get '/orders' do
     # Get orders
-    orders
+    orders = get_orders
     # Display all orders
-    show_orders
-    "Orders Count: #{ShopifyAPI::Order.count}\n"
+    show_orders(orders)
 
+    "Orders Count: #{orders.count}\n"
+  end
+
+  get '/customers' do
+    customers = get_customers
+    show_customers(customers)
   end
 
   post '/form' do
@@ -277,17 +282,17 @@ class SecondChance < Sinatra::Base
     end
 
     # Download the customers from Shopify
-    def customers
-      ShopifyAPI::Customer.all
+    def get_customers
+      return ShopifyAPI::Customer.all
     end
 
     # Download orders from Shopify
-    def orders
-      ShopifyAPI::Order.all
+    def get_orders
+      return ShopifyAPI::Order.all
     end
 
     # Show orders
-    def show_orders
+    def show_orders(orders)
       orderList = []
       orders.each do |order|
         puts "Order: #{order.number} = #{order.id}"
@@ -297,7 +302,7 @@ class SecondChance < Sinatra::Base
     end
 
     # Show cusotmers
-    def show_customers
+    def show_customers(customers)
       customerList = []
       customers.each do |customer|
 
