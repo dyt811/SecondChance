@@ -38,34 +38,34 @@ class SecondChance < Sinatra::Base
 
     # redirect to the install_url
     redirect install_url
-    mylog("End of Install")
+    mylog("End of Install", __LINE__)
   end
 
   # OAuthonication via TOKEN
   get '/secondchance/auth*' do
 
-    mylog("Reached the beginning of authorization")
+    mylog("Reached the beginning of authorization", __LINE__)
 
     # extract shop data from request parameters
     shop = request.params['shop']
-    mylog("#{shop}")
+    mylog("Shop: #{shop}", __LINE__)
 
     code = request.params['code']
-    mylog("#{code}")
+    mylog("Code: #{code}", __LINE__)
 
     hmac = request.params['hmac']
-    mylog("#{hmac}")
+    mylog("HMAC: #{hmac}", __LINE__)
 
     nonceReply = request.params['state']
-    mylog("#{nonceReply}")
+    mylog("State: #{nonceReply}", __LINE__)
 
     # Perform nonce validation to ensure that it is coming from Shopify
     validate_nonce(nonceReply)
-    mylog("Validated Nonce")
+    mylog("Validated Nonce", __LINE__)
 
     # perform hmac validation to determine if the request is coming from Shopify
     validate_hmac(hmac,request)
-    mylog("Validated HMAC")
+    mylog("Validated HMAC", __LINE__)
 
     # if no access token for this particular shop exist,
     # POST the OAuth request and receive the token in the response
@@ -249,8 +249,8 @@ class SecondChance < Sinatra::Base
       end
     end
 
-    def mylog(str)
-      puts "Reached=>#{__LINE__}:#{str}"
+    def mylog(str,Line)
+      puts "Reached=>#{Line}:#{str}"
       #puts "#{__FILE__}:#{__LINE__}:#{str}"
     end
   end
