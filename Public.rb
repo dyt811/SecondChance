@@ -34,7 +34,7 @@ class SecondChance < Sinatra::Base
     # construct the installation/permission request URL and redirect the merchant
     # Key component: Shop URL, API_Key, Scopes, APP_URL
     install_url = "http://#{shop}/admin/oauth/authorize?client_id=#{API_KEY}"\
-    "&scope=#{scopes}&redirect_uri=https://#{APP_URL}/secondchance/auth&state=#{NONCE}"
+    "&scope=#{scopes}&redirect_uri=https://#{APP_URL}/auth&state=#{NONCE}"
 
     # redirect to the install_url
     redirect install_url
