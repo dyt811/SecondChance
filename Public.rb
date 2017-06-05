@@ -164,7 +164,7 @@ class SecondChance < Sinatra::Base
     instantiate_session(@shop)
 
     # Get orders
-    orders = get_orders
+    orders = ShopifyAPI::Order.all
 
     "Orders Count: #{orders.count}\n"
 
