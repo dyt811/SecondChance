@@ -161,6 +161,9 @@ class SecondChance < Sinatra::Base
 
   #Retrieve a list of orders and display them.
   get '/orders' do
+
+    instantiate_session(@shop)
+
     # Get orders
     orders = ShopifyAPI::Order.all
 
@@ -173,7 +176,6 @@ class SecondChance < Sinatra::Base
 
   get '/customers' do
     instantiate_session(@shop)
-
     customers = get_customers
     show_customers(customers)
     "Customer Count: #{customers.count}\n"
