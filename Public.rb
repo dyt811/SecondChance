@@ -77,6 +77,7 @@ class SecondChance < Sinatra::Base
 
     # now that the session is activated, redirect to the bulk edit page
     redirect "https://second-chance.herokuapp.com/orders"
+    log("Redirected:", __LINE__)
   end
 
   # when POST to order creation process.
@@ -161,17 +162,20 @@ class SecondChance < Sinatra::Base
 
   #Retrieve a list of orders and display them.
   get '/orders' do
-
+    log("Initiated Orders:", __LINE__)
     instantiate_session(@shop)
 
     # Get orders
     orders = ShopifyAPI::Order.all
+    log("Obtaining Orders:", __LINE__)
+
+    log("Orders:#{orders}", __LINE__)
 
     "Orders Count: #{orders.count}\n"
 
     # Display all orders
     show_orders(orders)
-
+    log("End of ORDERS routine", __LINE__)
   end
 
   get '/customers' do
