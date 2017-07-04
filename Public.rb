@@ -163,11 +163,20 @@ class SecondChance < Sinatra::Base
   #Retrieve a list of orders and display them.
   get '/orders' do
     log("Initiated Orders:", __LINE__)
-    instantiate_session(@shop)
+    log(@shop)
 
+    log("Creating Session", __LINE__)
+    session = ShopifyAPI::Session.new(@shop, @tokens[@shop])
+
+    log("Activating Session", __LINE__)
+    ShopifyAPI::Base.activate_session(session)
+
+    log("Session Activated",__LINE__)
+
+    log("Obtaining Orders:", __LINE__)
     # Get orders
     orders = ShopifyAPI::Order.all
-    log("Obtaining Orders:", __LINE__)
+
 
     log("Orders:#{orders}", __LINE__)
 
