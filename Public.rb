@@ -170,46 +170,33 @@ class SecondChance < Sinatra::Base
   get '/orders' do
     log("Initiated Orders:", __LINE__)
 
-    shop = request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN']
-    log(shop, __LINE__)
-
-    token = @tokens[shop]
-    #log (token, __LINE__)
-
     #Read from cookie.
     @shop = session[:shop]
     log(@shop, __LINE__)
-
     @token = session[:token]
-    #log (@token, __LINE__)
 
-    log("Creating Session Method 1", __LINE__)
-    session1 = ShopifyAPI::Session.new(shop, token)
-
-    log("Creating Session Method 2", __LINE__)
-    session2 = ShopifyAPI::Session.new(@shop, @tokens[@shop])
-
-    log("Activating Session1", __LINE__)
-    ShopifyAPI::Base.activate_session(session1)
+    log("Creating Session Method", __LINE__)
+    session = ShopifyAPI::Session.new(@shop, @tokens[@shop])
 
     log("Activating Session2", __LINE__)
-    ShopifyAPI::Base.activate_session(session2)
+    ShopifyAPI::Base.activate_session(session)
 
     log("Session Activated",__LINE__)
 
     log("Obtaining Orders:", __LINE__)
 
     # Get orders
-    orders = ShopifyAPI::Order.all
-
-
+    @orders = ShopifyAPI::Order.all
+    
     #log("Orders:#{orders}", __LINE__)
 
     "Orders Count: #{orders.count}\n"
 
     # Display all orders
-    # show_orders(orders)
     log("End of ORDERS routine", __LINE__)
+
+    # All Data acquired. Time to display them.
+    erb :home, { :locals => params }
   end
 
   get '/customers' do

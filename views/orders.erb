@@ -1,0 +1,9 @@
+<h3>Second Chance</h3>
+<p>Welcome!</p>
+
+<h3>Orders</h3>
+<ul>
+  <% @orders.each do |order| %>
+    <li><a href=<%="@{shop}/admin/products/#{order.id}"%> target="_blank"> <%= order.id %> </a></li>
+  <% end %>
+</ul>
