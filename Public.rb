@@ -174,14 +174,14 @@ class SecondChance < Sinatra::Base
     log(shop, __LINE__)
 
     token = @tokens[shop]
-    log (token, __LINE__)
+    #log (token, __LINE__)
 
     #Read from cookie.
     @shop = session[:shop]
     log(@shop, __LINE__)
 
     @token = session[:token]
-    log (@token, __LINE__)
+    #log (@token, __LINE__)
 
     log("Creating Session Method 1", __LINE__)
     session1 = ShopifyAPI::Session.new(shop, token)
