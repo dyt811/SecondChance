@@ -200,7 +200,7 @@ class SecondChance < Sinatra::Base
     log("Obtaining Orders:", __LINE__)
 
     # Get orders
-    #orders = ShopifyAPI::Order.all
+    orders = ShopifyAPI::Order.all
 
 
     #log("Orders:#{orders}", __LINE__)
