@@ -207,7 +207,7 @@ class SecondChance < Sinatra::Base
     "Orders Count: #{orders.count}\n"
 
     # Display all orders
-    show_orders(orders)
+    # show_orders(orders)
     log("End of ORDERS routine", __LINE__)
   end
 
