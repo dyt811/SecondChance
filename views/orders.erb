@@ -4,6 +4,8 @@
 <h3>Orders</h3>
 <ul>
   <% @orders.each do |order| %>
-    <li><a href=<%="@{shop}/admin/products/#{order.id}"%> target="_blank"> <%= order.id %> </a></li>
+    <li>
+      <a href=<%="@{shop}/admin/products/#{order.id}"%> target="_blank"> <%= order.order_number %></a>, Order ID: <%= order.id%> 
+    </li>
   <% end %>
 </ul>
