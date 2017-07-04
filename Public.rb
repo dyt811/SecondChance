@@ -198,11 +198,12 @@ class SecondChance < Sinatra::Base
     log("Session Activated",__LINE__)
 
     log("Obtaining Orders:", __LINE__)
+
     # Get orders
-    orders = ShopifyAPI::Order.all
+    #orders = ShopifyAPI::Order.all
 
 
-    log("Orders:#{orders}", __LINE__)
+    #log("Orders:#{orders}", __LINE__)
 
     "Orders Count: #{orders.count}\n"
 
