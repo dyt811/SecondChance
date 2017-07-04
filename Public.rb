@@ -20,7 +20,11 @@ class SecondChance < Sinatra::Base
     super
   end
 
+
   #Sinatra block. When reaching that URL, do these...
+
+  # Enable sessions to prevent statelessness
+  enable :sessions
 
   # Key Installation Block to install the proper permission for the app.
   get '/install' do
@@ -49,6 +53,8 @@ class SecondChance < Sinatra::Base
 
     # extract shop data from request parameters
     @shop = request.params['shop']
+    session[:shop] = request.params['shop']
+
     log("Shop: #{@shop}", __LINE__)
 
     code = request.params['code']
@@ -163,13 +169,31 @@ class SecondChance < Sinatra::Base
   #Retrieve a list of orders and display them.
   get '/orders' do
     log("Initiated Orders:", __LINE__)
+
+    shop = request.env['HTTP_X_SHOPIFY_SHOP_DOMAIN']
+    log(shop, __LINE__)
+
+    token = @tokens[shop]
+    log (token, __LINE__)
+
+    #Read from cookie.
+    @shop = session[:shop]
     log(@shop, __LINE__)
 
-    log("Creating Session", __LINE__)
-    session = ShopifyAPI::Session.new(@shop, @tokens[@shop])
+    @token = session[:tokens[@shop]]
+    log (@token, __LINE__)
 
-    log("Activating Session", __LINE__)
-    ShopifyAPI::Base.activate_session(session)
+    log("Creating Session Method 1", __LINE__)
+    session1 = ShopifyAPI::Session.new(shop, token)
+
+    log("Creating Session Method 2", __LINE__)
+    session2 = ShopifyAPI::Session.new(@shop, @tokens[@shop])
+
+    log("Activating Session1", __LINE__)
+    ShopifyAPI::Base.activate_session(session1)
+
+    log("Activating Session2", __LINE__)
+    ShopifyAPI::Base.activate_session(session2)
 
     log("Session Activated",__LINE__)
 
@@ -226,6 +250,7 @@ class SecondChance < Sinatra::Base
         # if the response is successful, obtain the token and store it in a hash
         if response.code == 200
           @tokens[shop] = response['access_token']
+          session[:tokens[shop]] = response['access_token']
         else
           return [500, "Something went wrong."]
         end
