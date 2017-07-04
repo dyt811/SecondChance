@@ -195,7 +195,7 @@ class SecondChance < Sinatra::Base
     log("End of ORDERS routine", __LINE__)
 
     # All Data acquired. Time to display them.
-    erb :home, { :locals => params }
+    erb :orders #, { :locals => params }
   end
 
   get '/customers' do
