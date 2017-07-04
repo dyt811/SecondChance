@@ -180,7 +180,7 @@ class SecondChance < Sinatra::Base
     @shop = session[:shop]
     log(@shop, __LINE__)
 
-    @token = session[:tokens[@shop]]
+    @token = session[:token]
     log (@token, __LINE__)
 
     log("Creating Session Method 1", __LINE__)
@@ -250,7 +250,7 @@ class SecondChance < Sinatra::Base
         # if the response is successful, obtain the token and store it in a hash
         if response.code == 200
           @tokens[shop] = response['access_token']
-          session[:tokens[shop]] = response['access_token']
+          session[:token] = response['access_token']
         else
           return [500, "Something went wrong."]
         end
