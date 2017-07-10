@@ -6,7 +6,8 @@
   <% @orders.each do |order| %>
 
     <li>
-      <a href= <%="https://#{@shop}/admin/orders/#{order.id}" %> target="_blank"> <%= order.order_number %> </a>, Order ID: <%= order.id%>.
+      <a href= <%="#{order.id}" %> target="_blank"> <%= order.order_number %> </a>,
+      Order ID: <%= order.id%>.
     </li>
   <% end %>
 </ul>

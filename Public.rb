@@ -167,23 +167,44 @@ class SecondChance < Sinatra::Base
   end
 
   #Retrieve a list of orders and display them.
-  get '/orders' do
+  get '/orders/:orderID' do
     log("Initiated Orders:", __LINE__)
 
     #Read from cookie.
     @shop = session[:shop]
-    log(@shop, __LINE__)
     @token = session[:token]
 
-    log("Creating Session Method", __LINE__)
+    #Open Session.
     session = ShopifyAPI::Session.new(@shop, @tokens[@shop])
-
-    log("Activating Session2", __LINE__)
     ShopifyAPI::Base.activate_session(session)
 
-    log("Session Activated",__LINE__)
+    # Get the specific order
+    @order = ShopifyAPI::Order.find(:orderID)
 
-    log("Obtaining Orders:", __LINE__)
+    # Display all orders
+    #log("End of ORDER routine", __LINE__)
+
+    # All Data acquired. Time to display them.
+    erb :order, { :locals => params }
+  end
+
+  get '/order/' do
+    log("Initiated Orders:", __LINE__)
+
+    #Read from cookie.
+    @shop = session[:shop]
+    #log(@shop, __LINE__)
+    @token = session[:token]
+
+    #log("Creating Session Method", __LINE__)
+    session = ShopifyAPI::Session.new(@shop, @tokens[@shop])
+
+    #log("Activating Session2", __LINE__)
+    ShopifyAPI::Base.activate_session(session)
+
+    #log("Session Activated",__LINE__)
+
+    #log("Obtaining Orders:", __LINE__)
 
     # Get orders
     @orders = ShopifyAPI::Order.all

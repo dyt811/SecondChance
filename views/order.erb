@@ -1,0 +1,18 @@
+#
+
+<h3>Second Chance</h3>
+<p>Welcome!</p>
+
+<h3>Order Details</h3>
+<div>
+    <p>
+      <a href= <%="https://#{@shop}/admin/orders/#{@order.id}" %> target="_blank"> <%= @order.order_number %> </a>,
+      Order ID: <%= @order.id%>,
+    </p>
+    <p>
+    Billing Address: <%= @order.billing_address%>,
+    </p>
+    <p>
+    IP:<%= @order.browser_ip%>
+    </p>
+</div>
