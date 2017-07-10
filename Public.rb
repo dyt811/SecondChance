@@ -82,7 +82,7 @@ class SecondChance < Sinatra::Base
     # create_order_webhook
 
     # now that the session is activated, redirect to the bulk edit page
-    redirect "https://second-chance.herokuapp.com/orders"
+    redirect "https://second-chance.herokuapp.com/orders/"
     log("Redirected:", __LINE__)
   end
 
@@ -162,7 +162,7 @@ class SecondChance < Sinatra::Base
     "Hello there, #{params[:splat]}"
   end
 
-  get '/form' do
+  get '/form/' do
     erb :form
   end
 
@@ -188,7 +188,7 @@ class SecondChance < Sinatra::Base
     erb :order, { :locals => params }
   end
 
-  get '/order/' do
+  get '/order/?' do
     log("Initiated Orders:", __LINE__)
 
     #Read from cookie.
@@ -219,22 +219,22 @@ class SecondChance < Sinatra::Base
     erb :orders #, { :locals => params }
   end
 
-  get '/customers' do
+  get '/customers/' do
     instantiate_session(@shop)
     customers = get_customers
     show_customers(customers)
     "Customer Count: #{customers.count}\n"
   end
 
-  post '/form' do
+  post '/form/' do
     "You said '#{params[:message]}'"
   end
 
-  get '/secret' do
+  get '/secret/' do
     erb :secret
   end
 
-  post '/secret' do
+  post '/secret/' do
     params[:secret].reverse
   end
 
