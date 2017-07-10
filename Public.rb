@@ -208,8 +208,7 @@ class SecondChance < Sinatra::Base
 
     # Get orders
     @orders = ShopifyAPI::Order.all
-
-    log("Orders:#{orders}", __LINE__)
+  
     "Orders Count: #{@orders.count}\n"
 
     # Display all orders
