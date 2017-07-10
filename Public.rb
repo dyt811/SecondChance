@@ -168,7 +168,7 @@ class SecondChance < Sinatra::Base
 
   #Retrieve a list of orders and display them.
   get '/orders/:orderID' do
-    log("Initiated Orders:", __LINE__)
+    log("Initiated Order:", __LINE__)
 
     #Read from cookie.
     @shop = session[:shop]
@@ -182,7 +182,7 @@ class SecondChance < Sinatra::Base
     @order = ShopifyAPI::Order.find(:orderID)
 
     # Display all orders
-    #log("End of ORDER routine", __LINE__)
+    log("End of ORDER routine", __LINE__)
 
     # All Data acquired. Time to display them.
     erb :order, { :locals => params }
@@ -193,23 +193,23 @@ class SecondChance < Sinatra::Base
 
     #Read from cookie.
     @shop = session[:shop]
-    #log(@shop, __LINE__)
+    log(@shop, __LINE__)
     @token = session[:token]
 
-    #log("Creating Session Method", __LINE__)
+    log("Creating Session Method", __LINE__)
     session = ShopifyAPI::Session.new(@shop, @tokens[@shop])
 
-    #log("Activating Session2", __LINE__)
+    log("Activating Session2", __LINE__)
     ShopifyAPI::Base.activate_session(session)
 
-    #log("Session Activated",__LINE__)
+    log("Session Activated",__LINE__)
 
-    #log("Obtaining Orders:", __LINE__)
+    log("Obtaining Orders:", __LINE__)
 
     # Get orders
     @orders = ShopifyAPI::Order.all
 
-    #log("Orders:#{orders}", __LINE__)
+    log("Orders:#{orders}", __LINE__)
     "Orders Count: #{@orders.count}\n"
 
     # Display all orders
@@ -243,7 +243,7 @@ class SecondChance < Sinatra::Base
   end
 
   not_found do
-    halt 404, 'not found'
+    halt 404, 'You have reached the 404 page. Routing not found'
   end
 
   helpers do
