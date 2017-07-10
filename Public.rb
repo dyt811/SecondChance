@@ -188,7 +188,7 @@ class SecondChance < Sinatra::Base
     erb :order, { :locals => params }
   end
 
-  get '/order/?' do
+  get '/orders/?' do
     log("Initiated Orders:", __LINE__)
 
     #Read from cookie.
