@@ -16,6 +16,6 @@
       Order Number: <%= @order&.order_number%>
     </p>
     <p>
-    Client IP: <%= if @order&.client_details %> <%= @order&.client_details&.browser_ip %> <% end %>
+    Client IP: <% if @order&.client_details %> <%= @order&.client_details&.browser_ip %> <% end %>
     </p>
 </div>
