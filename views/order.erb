@@ -10,9 +10,12 @@
       Order ID: <%= @order.id%>,
     </p>
     <p>
-    Billing Address: <%= @order.billing_address%>,
+    Billing Email: <%= @order.email%>,
     </p>
     <p>
-    IP:<%= @order.browser_ip%>
+    Client IP: <%= @order.client_details.browser_ip%>
+    </p>
+    <p>
+      Order Number: <%= @order.order_number%>
     </p>
 </div>

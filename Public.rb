@@ -363,6 +363,10 @@ class SecondChance < Sinatra::Base
     end
   end
 
+  error 500 do
+    "Sinatra Error Encountered. Check Herokuapp logs" 
+  end
+
 end
 
 run SecondChance.run!
