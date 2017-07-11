@@ -168,18 +168,21 @@ class SecondChance < Sinatra::Base
 
   #Retrieve a list of orders and display them.
   get '/orders/:orderID' do
-    log("Initiated Order:", __LINE__)
+    log("Initiated Individual Order Retrieval:", __LINE__)
 
     #Read from cookie.
     @shop = session[:shop]
     @token = session[:token]
+    log(@shop,__LINE__);
 
     #Open Session.
     session = ShopifyAPI::Session.new(@shop, @tokens[@shop])
     ShopifyAPI::Base.activate_session(session)
 
+    log(params[:orderID],__LINE__)
+
     # Get the specific order
-    @order = ShopifyAPI::Order.find(:orderID)
+    @order = ShopifyAPI::Order.find(params[:orderID])
 
     # Display all orders
     log("End of ORDER routine", __LINE__)
@@ -189,7 +192,7 @@ class SecondChance < Sinatra::Base
   end
 
   get '/orders/?' do
-    log("Initiated Orders:", __LINE__)
+    log("Initiated Orders Retrieval:", __LINE__)
 
     #Read from cookie.
     @shop = session[:shop]
@@ -208,7 +211,7 @@ class SecondChance < Sinatra::Base
 
     # Get orders
     @orders = ShopifyAPI::Order.all
-  
+
     "Orders Count: #{@orders.count}\n"
 
     # Display all orders
@@ -242,7 +245,7 @@ class SecondChance < Sinatra::Base
   end
 
   not_found do
-    halt 404, 'You have reached the 404 page. Routing not found'
+    halt 404, 'You have reached the 404 page. Routing not found. Check your Sinatra configuration ruby file.'
   end
 
   helpers do
