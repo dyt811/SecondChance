@@ -7,15 +7,15 @@
 <div>
     <p>
       <a href= <%="https://#{@shop}/admin/orders/#{@order.id}" %> target="_blank"> <%= @order.order_number %> </a>,
-      Order ID: <%= @order.id %>,
+      Order ID: <%= @order&.id %>,
     </p>
     <p>
-    Billing Email: <%= @order.email%>,
+    Billing Email: <%= @order&.email%>,
     </p>
     <p>
-      Order Number: <%= @order.order_number%>
+      Order Number: <%= @order&.order_number%>
     </p>
     <p>
-    Client IP: <% if @order.client_details.browser_ip %> <%= @order.client_details.browser_ip%> <% end%>
+    Client IP: <%= @order&.client_details&.browser_ip%>
     </p>
 </div>
