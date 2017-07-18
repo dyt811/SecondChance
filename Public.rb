@@ -7,6 +7,7 @@ require 'dotenv'
 Dotenv.load
 
 class SecondChance < Sinatra::Base
+  register React::Sinatra
   attr_reader :tokens
   API_KEY = ENV['API_KEY']
   API_SECRET = ENV['API_SECRET']
@@ -18,6 +19,21 @@ class SecondChance < Sinatra::Base
     @tokens = {}
     @shop = {}
     super
+  end
+
+  # Sinatra React part: https://github.com/namusyaka/react-sinatra
+  configure do
+    React::Sinatra.configure do |config|
+    # configures for bundled React.js
+    config.use_bundled_react = true
+    config.env = ENV['RACK_ENV'] || :development
+    config.addon = true
+
+    # The asset should be able to be compiled by your server side runtime.
+    # react-sinatra does not transform jsx into js, also ES2015 may not be worked through.
+    # config.asset_path = File.join('client', 'dist', 'server.js')
+    config.runtime = :execjs
+    end
   end
 
 
@@ -147,6 +163,19 @@ class SecondChance < Sinatra::Base
 
   get '/about' do
     "Welcome to the world of DEATH"
+  end
+
+  get '/react/:name' do |name|
+    component = react_component('Hello', { name: name }, prerender: true)
+    # ...
+  end
+
+  get '/react-component' do
+    haml :'react-component', layout: true
+  end
+
+  get '/react-component-with-server' do
+    haml :'react-component-with-server', layout: true
   end
 
   get '/hello/:name' do
@@ -364,7 +393,7 @@ class SecondChance < Sinatra::Base
   end
 
   error 500 do
-    "Sinatra Error Encountered. Check Herokuapp logs" 
+    "Sinatra Error Encountered. Check Herokuapp logs"
   end
 
 end
